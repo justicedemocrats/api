@@ -3,5 +3,23 @@
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "superagent": "^4.0.0-beta.5"
-  }
+  },
+  "name": "functions",
+  "description": "Justice Democrats' Google Cloud functions!",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "deploy": "gcloud beta functions deploy signup --region us-central1 --env-vars-file .env.yaml"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justicedemocrats/functions.git"
+  },
+  "author": "Ben Packer <ben.paul.ryan.packer@gmail.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/justicedemocrats/functions/issues"
+  },
+  "homepage": "https://github.com/justicedemocrats/functions#readme"
 }
