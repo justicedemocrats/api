@@ -13,19 +13,10 @@ const ACTIONKIT_SIGNUP_PAGE = "signup-justice-democrats";
 const access_token = process.env.NETLIFY_PERSONAL_ACCESS_TOKEN;
 const last_ran = moment().subtract(100, "hours");
 
-async function main() {
-  const forms = await getAllForms();
-
-  for (let form of forms) {
-    const form_id = form.id;
-    const submissions = await getAllSubmissions({ form_id }, last_ran, 1, []);
-    const chunks = _.chunk(submissions, CHUNK_SIZE);
-
-    for (let chunk of chunks) {
-      await processSubmissionChunk(chunk);
-      console.log(`Processed submission chunk`);
-    }
-  }
+async function main(req, res) {
+  const created = processSubmission({ data: req.body });
+  console.log(`Created ${JSON.stringify(created.body)}`);
+  return res.send("OK");
 }
 
 async function getAllForms() {
