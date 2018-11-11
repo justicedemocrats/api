@@ -1,4 +1,3 @@
-const log = require("debug")("api:convert-to-tileset");
 const mapbox = require("./mapbox");
 const username = mapbox.username;
 const progressCheckInterval = 1000;
@@ -19,7 +18,7 @@ async function convertDatasetToTileset(dataset) {
     await sleep(progressCheckInterval);
   }
 
-  log("Finished conversion for %s", dataset.name);
+  console.log(`Finished conversion for ${dataset.name}`);
 
   return upload;
 }
@@ -30,7 +29,7 @@ async function isInProgress(upload_id, name) {
   );
 
   if (upload.complete !== true) {
-    log("Progress on conversion for %s: %d", name, upload.progress);
+    console.log(`Progress on conversion for ${name}: ${upload.progress}`);
   }
 
   return upload.complete !== true;

@@ -1,16 +1,15 @@
 const _ = require("lodash");
 const moment = require("moment");
+const config = require("../config");
 const request = require("superagent");
-if (process.env.NODE_ENV !== "prod" && process.env.NODE_ENV !== "production")
-  require("dotenv").config();
 
 const CHUNK_SIZE = 10;
 const NETLIFY_BASE_URL = "https://api.netlify.com/api/v1";
-const ACTIONKIT_BASE_URL = process.env.ACTIONKIT_BASE_URL;
-const ACTIONKIT_USERNAME = process.env.ACTIONKIT_USERNAME;
-const ACTIONKIT_PASSWORD = process.env.ACTIONKIT_PASSWORD;
+const ACTIONKIT_BASE_URL = config.ACTIONKIT_BASE_URL;
+const ACTIONKIT_USERNAME = config.ACTIONKIT_USERNAME;
+const ACTIONKIT_PASSWORD = config.ACTIONKIT_PASSWORD;
 const ACTIONKIT_SIGNUP_PAGE = "signup-justice-democrats";
-const access_token = process.env.NETLIFY_PERSONAL_ACCESS_TOKEN;
+const access_token = config.NETLIFY_PERSONAL_ACCESS_TOKEN;
 const last_ran = moment().subtract(100, "hours");
 
 async function main(req, res) {
