@@ -1,6 +1,6 @@
 const request = require("superagent");
-const credentials = { access_token: process.env.MAPBOX_ACCESS_TOKEN };
-const username = process.env.MAPBOX_USERNAME;
+const credentials = { access_token: config.MAPBOX_ACCESS_TOKEN };
+const username = config.MAPBOX_USERNAME;
 const baseUrl = "https://api.mapbox.com";
 
 module.exports = {

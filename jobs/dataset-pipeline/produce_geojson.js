@@ -1,6 +1,5 @@
 const fs = require("fs");
 const rimraf = require("rimraf");
-const log = require("debug")("api:produce-geojson");
 
 /*
  *
@@ -22,15 +21,15 @@ function renameFiles() {
       );
 
       rimraf(`./geo-data/states/${state}`, err => {
-        log(`Deleted ${state} folder`);
+        console.log(`Deleted ${state} folder`);
       });
 
-      log(`Did ${state}`);
+      console.log(`Did ${state}`);
     } catch (ex) {
-      log("Could not do %s", state);
+      console.log(`Could not do ${state}`);
     }
   }
-  log("Done");
+  console.log("Done");
   return true;
 }
 

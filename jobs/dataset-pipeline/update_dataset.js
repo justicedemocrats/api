@@ -1,5 +1,4 @@
 const _ = require("lodash");
-const log = require("debug")("api:upload-geojson");
 const mapbox = require("./mapbox");
 const username = mapbox.username;
 
