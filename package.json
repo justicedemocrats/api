@@ -15,25 +15,24 @@
     "sqlite3": "^4.0.3",
     "superagent": "^4.0.0-beta.5"
   },
-  "name": "functions",
-  "description": "Justice Democrats' Google Cloud functions!",
+  "name": "api",
+  "description": "Justice Democrats' API!",
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "deploy-process-nomination": "gcloud beta functions deploy process_nomination --region us-central1 --env-vars-file .env.yaml",
-    "deploy-signup": "gcloud beta functions deploy signup --region us-central1 --env-vars-file .env.yaml",
-    "deploy-nominate": "gcloud beta functions deploy nominate --region us-central1 --env-vars-file .env.yaml",
+    "deploy": "gcloud beta functions deploy signup --region us-central1 --env-vars-file .env.yaml",
+    "start": "node app.js",
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/justicedemocrats/functions.git"
+    "url": "git+https://github.com/justicedemocrats/api.git"
   },
   "author": "Ben Packer <ben.paul.ryan.packer@gmail.com>",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/justicedemocrats/functions/issues"
+    "url": "https://github.com/justicedemocrats/api/issues"
   },
-  "homepage": "https://github.com/justicedemocrats/functions#readme"
+  "homepage": "https://github.com/justicedemocrats/api#readme"
 }
