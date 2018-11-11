@@ -1,7 +1,18 @@
 {
   "dependencies": {
+    "airtable": "^0.5.7",
+    "chai": "^4.2.0",
+    "debug": "^4.1.0",
+    "dotenv": "^6.1.0",
+    "faker": "^4.1.0",
+    "geojson": "^0.5.0",
+    "knex": "^0.15.2",
     "lodash": "^4.17.11",
+    "mocha": "^5.2.0",
     "moment": "^2.22.2",
+    "pg": "^7.5.0",
+    "rimraf": "^2.6.2",
+    "sqlite3": "^4.0.3",
     "superagent": "^4.0.0-beta.5"
   },
   "name": "functions",
@@ -10,7 +21,10 @@
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
-    "deploy": "gcloud beta functions deploy signup --region us-central1 --env-vars-file .env.yaml"
+    "deploy-process-nomination": "gcloud beta functions deploy process_nomination --region us-central1 --env-vars-file .env.yaml",
+    "deploy-signup": "gcloud beta functions deploy signup --region us-central1 --env-vars-file .env.yaml",
+    "deploy-nominate": "gcloud beta functions deploy nominate --region us-central1 --env-vars-file .env.yaml",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
