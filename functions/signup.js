@@ -13,9 +13,11 @@ const access_token = config.NETLIFY_PERSONAL_ACCESS_TOKEN;
 const last_ran = moment().subtract(100, "hours");
 
 async function main(req, res) {
-  const created = processSubmission({ data: req.body });
-  console.log(`Created ${JSON.stringify(created.body)}`);
-  return res.send("OK");
+  const {
+    body: { akid }
+  } = await processSubmission({ data: req.body });
+  console.log(`Created or updated ${akid}`);
+  return res.json({ akid });
 }
 
 async function getAllForms() {
