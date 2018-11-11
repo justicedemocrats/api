@@ -33,11 +33,11 @@ exports.up = function(knex, Promise) {
     }),
     knex.schema.createTable("people_emails", t => {
       t.integer("person_id").references("people");
-      t.string("number").references("phone_numbers");
+      t.string("email").references("email_addresses");
     }),
     knex.schema.createTable("people_phones", t => {
       t.integer("person_id").references("people");
-      t.string("email").references("email_addresses");
+      t.string("number").references("phone_numbers");
     }),
     knex.schema.createTable("people_addresses", t => {
       t.integer("person_id").references("people");
