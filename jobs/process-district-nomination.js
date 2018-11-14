@@ -6,7 +6,8 @@ const districtKeys = {
   "Nominator Email": "nominatorEmail",
   "Nominator Phone": "nominatorPhone",
   "Nominator Zip": "nominatorZip",
-  "Nominator Name": "nominatorName"
+  "Nominator First Name": "nominatorFirst",
+  "Nominator Last Name": "nominatorLast"
 };
 
 module.exports = async function({ id }) {
@@ -30,7 +31,7 @@ module.exports = async function({ id }) {
     number: core.nominatorPhone,
     email: core.nominatorEmail,
     zip: core.nominatorZip,
-    name: core.nominatorName
+    name: core.nominatorFirst + " " + core.nominatorLast
   };
 
   const nomination = extra;
@@ -38,7 +39,7 @@ module.exports = async function({ id }) {
 
   await queue.enqueue("mail-nominator", {
     type: "district",
-    to: nominator.nominatorEmail,
+    to: nominator.email,
     db_id: id,
     ...nomination
   });

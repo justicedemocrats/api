@@ -1,7 +1,7 @@
 module.exports = {
   "Ability to Run": "Ability to run",
   Age: "42",
-  Disability: "",
+  // Disability: "",
   // "Veteran Status": """,
   Ethnicity: "White",
   "Fundraising Experience": "No",

@@ -6,11 +6,13 @@ const candidateKeys = {
   "Nominator Email": "nominatorEmail",
   "Nominator Phone": "nominatorPhone",
   "Nominator Zip": "nominatorZip",
-  "Nominator Name": "nominatorName",
+  "Nominator First Name": "nominatorFirst",
+  "Nominator Last Name": "nominatorLast",
   "Nominee Email": "nomineeEmail",
   "Nominee Phone": "nomineePhone",
   "Nominee Zip": "nomineeZip",
-  "Nominee Name": "nomineeName"
+  "Nominee First Name": "nomineeFirst",
+  "Nominee Last Name": "nomineeLast"
 };
 
 module.exports = async function({ id }) {
@@ -34,14 +36,14 @@ module.exports = async function({ id }) {
     number: core.nominatorPhone,
     email: core.nominatorEmail,
     zip: core.nominatorZip,
-    name: core.nominatorName
+    name: core.nominatorFirst + " " + core.nominatorLast
   };
 
   const nominee = {
     number: core.nomineePhone,
     email: core.nomineeEmail,
     zip: core.nomineeZip,
-    name: core.nomineeName
+    name: core.nomineeFirst + " " + core.nomineeLast
   };
 
   const nomination = extra;
@@ -54,7 +56,7 @@ module.exports = async function({ id }) {
 
   await queue.enqueue("mail-nominator", {
     type: "candidate",
-    to: nominator.nominatorEmail,
+    to: nominator.email,
     db_id: id,
     ...nomination
   });

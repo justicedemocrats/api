@@ -9,6 +9,7 @@ module.exports = {
   "Nominator Pledge": "I will help out so much",
   "Nominator Twitter": "twitter.com/benpacker",
   "Nominator Zip": "75225",
-  "Nominator Name": "Ben Packer",
+  "Nominator First Name": "Ben",
+  "Nominator Last Name": "Packer",
   "Why District": "Our district needs a Justice Democrat because"
 };
