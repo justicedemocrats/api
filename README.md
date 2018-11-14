@@ -2,6 +2,8 @@
 
 ##
 
+= test full request with job queue
+= deploy api, deploy redis, run migrations, run live test
 = only the nominator gets added to the email list
 = upsert nominator and nominee, and attach them both
 = cosigners should be people
@@ -13,5 +15,8 @@
 = email cosigners
 = put in the fine print (something from initial form)
 = add random data to tests
+= add checkbox true boolean for airtable
+= add nominee email and phone from fm3
+
 "We may share your data with any legally linked organizations for the purpose of
 coordinating progressive activity in your area."

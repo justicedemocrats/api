@@ -73,30 +73,13 @@ exports.up = function(knex, Promise) {
       t.boolean("confirmed");
     }),
 
-    knex.schema.createTable("module_1_submissions", t => {
+    knex.schema.createTable("module_submissions", t => {
       t.increments("id")
         .unique()
         .primary();
+      t.integer("nomination").references("nominations");
       t.string("airtable_id");
-      t.integer("nomination_id").references("nominations");
-      t.jsonb("data");
-    }),
-
-    knex.schema.createTable("module_2_submissions", t => {
-      t.increments("id")
-        .unique()
-        .primary();
-      t.string("airtable_id");
-      t.integer("nomination_id").references("nominations");
-      t.jsonb("data");
-    }),
-
-    knex.schema.createTable("module_3_submissions", t => {
-      t.increments("id")
-        .unique()
-        .primary();
-      t.string("airtable_id");
-      t.integer("nomination_id").references("nominations");
+      t.string("module");
       t.jsonb("data");
     })
   ]);
