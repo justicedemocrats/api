@@ -1,13 +1,16 @@
 // Update with your config settings.
 
-module.exports = {
-  dev: {
-    client: "sqlite3",
-    connection: {
-      filename: "./dev.sqlite3"
-    }
-  },
+const dev = {
+  client: "sqlite3",
+  connection: {
+    filename: "./dev.sqlite3"
+  }
+};
 
+module.exports = {
+  dev: dev,
+  test: dev,
+  development: dev,
   staging: {
     client: "postgresql",
     connection: {

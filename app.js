@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const signup = require("./functions/signup");
+const signup = require("./endpoints/signup");
+const nominate = require("./endpoints/nominate");
 
 app.use(bodyParser.json());
 app.post("/signup", signup);
+app.post("/nominate/district", nominate.district);
+app.post("/nominate/candidate", nominate.candidate);
 
 if (module === require.main) {
   const server = app.listen(process.env.PORT || 8080, () => {

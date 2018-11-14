@@ -64,3 +64,5 @@ dev.sqlite3
 temp/
 config/dev.js
 config/production.js
+dump.rdb
+config/templates.js

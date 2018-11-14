@@ -25,6 +25,7 @@ describe("upsert person should create and align airtable w/ db", () => {
       })
       .catch(error => {
         console.error(error);
+        console.trace();
         done(error);
       });
   });
