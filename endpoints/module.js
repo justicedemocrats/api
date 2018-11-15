@@ -1,5 +1,6 @@
 const queue = require("../lib/queue");
 const db = require("../lib/db");
+const crypt = require("../lib/crypt");
 
 async function main(req, res) {
   const data = req.body;
@@ -9,11 +10,13 @@ async function main(req, res) {
   return res.json({ id: insertedId });
 }
 
-async function writeDummySubmission(moduleName, data) {
-  const { id, ...submission } = data;
+async function writeDummySubmission(moduleReference, data) {
+  const { id, module, ...submission } = data;
+  const nomination = crypt.decrypt(id);
   const insertResults = await db("module_submissions").insert({
-    nomination: id,
-    module: moduleName,
+    nomination: nomination,
+    module_reference: moduleReference,
+    module_title: data.module,
     data: JSON.stringify(submission)
   });
   return insertResults[0];

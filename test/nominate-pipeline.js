@@ -7,6 +7,7 @@ const processDistrictNomination = require("../jobs/process-district-nomination")
 const processCandidateNomination = require("../jobs/process-candidate-nomination");
 const mailNominator = require("../jobs/mail-nominator");
 const processModuleSubmission = require("../jobs/process-module-submission");
+const crypt = require("../lib/crypt");
 
 const { assert, expect } = chai;
 
@@ -111,7 +112,10 @@ describe("candidate nomination", () => {
       request(app)
         .post(`/module/${m[0]}`)
         .send(
-          Object.assign(require(`./sample-data/${m[1]}`), { id: nominationId })
+          Object.assign(require(`./sample-data/${m[1]}`), {
+            id: crypt.encrypt(nominationId),
+            module: m[1]
+          })
         )
         .end((err, res) => {
           expect(res.body).to.have.property("id");

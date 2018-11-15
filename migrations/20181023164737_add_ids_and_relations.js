@@ -79,7 +79,8 @@ exports.up = function(knex, Promise) {
         .primary();
       t.integer("nomination").references("nominations");
       t.string("airtable_id");
-      t.string("module");
+      t.string("module_reference");
+      t.string("module_title");
       t.jsonb("data");
     })
   ]);

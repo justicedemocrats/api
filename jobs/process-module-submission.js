@@ -14,7 +14,7 @@ module.exports = async ({ id }) => {
     .select(
       "module_submissions.id as submission_id",
       "module_submissions.data as submission_data",
-      "module_submissions.module as module",
+      "module_submissions.module_reference as module_reference",
       "nominations.id as nomination_id",
       "nominations.airtable_id as nomination_airtable_id",
       "nominations.data as nomination_data"
@@ -26,7 +26,6 @@ module.exports = async ({ id }) => {
 
   await insertModuleSubmission(submission);
 
-  console.log(submission.nomination_data);
   const nominatorEmail = submission.nomination_data["Nominator Email"];
 
   await queue.enqueue("mail-after-module", {
