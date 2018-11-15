@@ -7,6 +7,7 @@ const processDistrictNomination = require("../jobs/process-district-nomination")
 const processCandidateNomination = require("../jobs/process-candidate-nomination");
 const mailNominator = require("../jobs/mail-nominator");
 const processModuleSubmission = require("../jobs/process-module-submission");
+const addNominationFollowUpAttributes = require("../lib/add-nomination-follow-up-attributes");
 const crypt = require("../lib/crypt");
 
 const { assert, expect } = chai;
@@ -125,7 +126,6 @@ describe("candidate nomination", () => {
     });
 
     it(`should successfully process the submission for ${m[0]}`, done => {
-      console.log({ id: submissionId });
       processModuleSubmission({ id: submissionId })
         .then(submission => {
           expect(submission).to.have.property("airtable_id");
@@ -133,5 +133,17 @@ describe("candidate nomination", () => {
         })
         .catch(done);
     });
+  });
+
+  it("should add the mail attributes to the nomination", done => {
+    addNominationFollowUpAttributes({ id: nominationId }).then(
+      enhancedNomination => {
+        modules.forEach(([reference, title]) => {
+          expect(enhancedNomination).to.have.property(`${title}_url`);
+          expect(enhancedNomination).to.have.property(`${title}_completed`);
+        });
+        done();
+      }
+    );
   });
 });
