@@ -1,5 +1,6 @@
 const snakeCase = require("snake-case");
 const mail = require("../lib/mail");
+const addNominationFollowUpAttributes = require("../lib/add-nomination-follow-up-attributes");
 
 module.exports = async job => {
   const { type, to, ...rest } = job;
@@ -13,5 +14,9 @@ module.exports = async job => {
     data[snakeCase(key)] = rest[key];
   });
 
-  return await mail.sendTemplate(template, to, data);
+  const enhanced = await addNominationFollowUpAttributes(
+    Object.assign(data, { id: data.db_id })
+  );
+
+  return await mail.sendTemplate(template, to, enhanced);
 };

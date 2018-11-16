@@ -63,13 +63,15 @@ exports.up = function(knex, Promise) {
       t.integer("nominator").references("people");
     }),
 
-    knex.schema.createTable("cosigns", t => {
+    knex.schema.createTable("cosigners", t => {
       t.increments("id")
         .unique()
         .primary();
       t.string("airtable_id");
-      t.integer("person_id").references("people");
-      t.integer("nomination_id").references("nominations");
+      t.integer("nomination").references("nominations");
+      t.string("name");
+      t.string("email");
+      t.string("zip");
       t.boolean("confirmed");
     }),
 

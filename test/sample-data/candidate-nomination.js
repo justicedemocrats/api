@@ -18,5 +18,25 @@ module.exports = {
   "Nominee Last Name": "Packer",
   "Nominee Phone": "4699642038",
   "Why District": "Our district / state needs a Justice Democrat because",
-  "Why Nominee": "She's my sister"
+  "Why Nominee": "She's my sister",
+  "Co-Signers": [
+    {
+      Email: "cosigner1+test@gmail.com",
+      Zip: "11206",
+      "First Name": "CoSigner",
+      "Last Name": "1"
+    },
+    {
+      Email: "cosigner2+test@gmail.com",
+      Zip: "11206",
+      "First Name": "CoSigner",
+      "Last Name": "2"
+    },
+    {
+      Email: "cosigner3+test@gmail.com",
+      Zip: "11206",
+      "First Name": "CoSigner",
+      "Last Name": "3"
+    }
+  ]
 };

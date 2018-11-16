@@ -7,6 +7,8 @@ const kueUiExpress = require("kue-ui-express");
 const signup = require("./endpoints/signup");
 const nominate = require("./endpoints/nominate");
 const moduleHandler = require("./endpoints/module");
+const cosignerInfo = require("./endpoints/cosigner-info");
+const confirmCosigner = require("./endpoints/confirm-cosigner");
 const { kue } = require("./lib/queue");
 
 app.use(cors());
@@ -18,6 +20,8 @@ app.post("/signup", signup);
 app.post("/nominate/district", nominate.district);
 app.post("/nominate/candidate", nominate.candidate);
 app.post("/module/:module", moduleHandler);
+app.get("/cosigner-info/:id", cosignerInfo);
+app.get("/confirm-cosigner/:id", confirmCosigner);
 
 if (module === require.main) {
   const jobs = require("./jobs");

@@ -1,13 +1,15 @@
 const queue = require("../lib/queue");
 const insertNomination = require("../lib/insert-nomination");
 const db = require("../lib/db");
+const crypt = require("../lib/crypt");
 
 const districtKeys = {
   "Nominator Email": "nominatorEmail",
   "Nominator Phone": "nominatorPhone",
   "Nominator Zip": "nominatorZip",
   "Nominator First Name": "nominatorFirst",
-  "Nominator Last Name": "nominatorLast"
+  "Nominator Last Name": "nominatorLast",
+  "Co-Signers": "cosigners"
 };
 
 module.exports = async function({ id }) {
@@ -42,6 +44,12 @@ module.exports = async function({ id }) {
     to: nominator.email,
     db_id: id,
     ...nomination
+  });
+
+  await queue.enqueue("process-cosigners", {
+    nominationId,
+    nomination,
+    cosigners: core.cosigners
   });
 
   return (await db("nominations").where({ id }))[0];
