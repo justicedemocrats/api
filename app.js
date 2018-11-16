@@ -4,11 +4,13 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const kueUiExpress = require("kue-ui-express");
+const basicauth = require("basicauth-middleware");
 const signup = require("./endpoints/signup");
 const nominate = require("./endpoints/nominate");
 const moduleHandler = require("./endpoints/module");
 const cosigner = require("./endpoints/cosigner");
 const { kue } = require("./lib/queue");
+const config = require("./config");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,7 +21,6 @@ app.post("/signup", signup);
 app.post("/nominate/district", nominate.district);
 app.post("/nominate/candidate", nominate.candidate);
 app.post("/module/:module", moduleHandler);
-app.get("/cosigner/info/:id", cosigner.info);
 app.get("/cosigner/confirm/:id", cosigner.confirm);
 
 if (module === require.main) {

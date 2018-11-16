@@ -280,11 +280,17 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-basic-auth@~2.0.0:
+basic-auth@^2.0.0, basic-auth@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/basic-auth/-/basic-auth-2.0.1.tgz#b998279bf47ce38344b4f3cf916d4679bbf51e3a"
   dependencies:
     safe-buffer "5.1.2"
+
+basicauth-middleware@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/basicauth-middleware/-/basicauth-middleware-3.1.0.tgz#8bb6e4cb9cdab37e5c8be71b6277da5e3c04927a"
+  dependencies:
+    basic-auth "^2.0.0"
 
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"

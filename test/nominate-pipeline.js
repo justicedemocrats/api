@@ -120,7 +120,7 @@ describe("candidate nomination", () => {
 
   it("should return the correct cosigner info", done => {
     request(app)
-      .get(`/cosigner-info/${crypt.encrypt(cosignerId)}`)
+      .get(`/cosigner/info/${crypt.encrypt(cosignerId)}`)
       .end((err, res) => {
         for (let key of [
           "state",

@@ -21,9 +21,9 @@ module.exports = async function({ nominationId, nomination, cosigners }) {
           airtable("Co-Signers").create(
             {
               Nominations: [nomination_airtable_id],
-              Email: c.Email,
-              Name: c["First Name"] + " " + c["Last Name"],
-              Zip: c.Zip
+              Email: c.email,
+              Name: c.name,
+              Zip: c.zip
             },
             (error, record) => {
               if (error) {
@@ -42,9 +42,9 @@ module.exports = async function({ nominationId, nomination, cosigners }) {
     cosigners.map((c, idx) =>
       db("cosigners").insert({
         nomination: nominationId,
-        email: c.Email,
-        name: c["First Name"] + " " + c["Last Name"],
-        zip: c.Zip,
+        email: c.email,
+        name: c.name,
+        zip: c.zip,
         airtable_id: airtable_ids[idx]
       })
     )
@@ -57,8 +57,8 @@ module.exports = async function({ nominationId, nomination, cosigners }) {
     cosigners.map((cosigner, idx) =>
       (async () => {
         await queue.enqueue("mail-cosigner", {
-          to: cosigner.Email,
-          confirmUrl: `${config.COSIGN_CONFIRM_URL}#${crypt.encrypt(
+          to: cosigner.email,
+          confirm_url: `${config.COSIGN_CONFIRM_URL}#${crypt.encrypt(
             cosigner_ids[idx]
           )}`,
           ...nomination

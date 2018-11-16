@@ -56,16 +56,23 @@ module.exports = async function({ id }) {
     nominee
   );
 
+  const mailable = Object.assign(nomination, {
+    "Nominee First Name": core.nomineeFirst,
+    "Nominee Last Name": core.nomineeLast,
+    "Nominator First Name": core.nominatorFirst,
+    "Nominator Last Name": core.nominatorLast
+  });
+
   await queue.enqueue("mail-nominator", {
     type: "candidate",
     to: nominator.email,
     db_id: id,
-    ...nomination
+    ...mailable
   });
 
   await queue.enqueue("process-cosigners", {
     nominationId,
-    nomination,
+    nomination: mailable,
     cosigners: core.cosigners
   });
 

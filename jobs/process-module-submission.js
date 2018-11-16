@@ -30,6 +30,7 @@ module.exports = async ({ id }) => {
 
   await queue.enqueue("mail-after-module", {
     to: nominatorEmail,
+    nominationId: id,
     ...submission.submission_data,
     ...submission.nomination_data
   });

@@ -63,6 +63,7 @@ typings/
 dev.sqlite3
 temp/
 config/dev.js
+config/ngrok.js
 config/production.js
 dump.rdb
 config/templates.js

@@ -22,8 +22,6 @@ async function info(req, res) {
     .select("nominator.name as nominator_name")
     .select("nominee.name as nominee_name");
 
-  console.log(info);
-
   if (info[0]) {
     return res.json(info[0]);
   } else {
@@ -39,7 +37,7 @@ async function info(req, res) {
 async function confirm(req, res) {
   const cosignerId = crypt.decrypt(req.params.id);
   await queue.enqueue("confirm-cosigner", { cosignerId });
-  return res.json({ id: cosignId });
+  return res.redirect("https://www.justicedemocrats.com/home");
 }
 
 module.exports = { info, confirm };
