@@ -1,7 +1,8 @@
 const db = require("../lib/db");
 const crypt = require("../lib/crypt");
+const queue = require("../lib/queue");
 
-async function cosignerInfo(req, res) {
+async function info(req, res) {
   const id = crypt.decrypt(req.params.id);
   const info = await db("cosigners")
     .where({ "cosigners.id": id })
@@ -35,4 +36,10 @@ async function cosignerInfo(req, res) {
   }
 }
 
-module.exports = cosignerInfo;
+async function confirm(req, res) {
+  const cosignerId = crypt.decrypt(req.params.id);
+  await queue.enqueue("confirm-cosigner", { cosignerId });
+  return res.json({ id: cosignId });
+}
+
+module.exports = { info, confirm };
