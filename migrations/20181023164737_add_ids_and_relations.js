@@ -36,11 +36,17 @@ exports.up = function(knex, Promise) {
     }),
 
     knex.schema.createTable("people_emails", t => {
+      t.increments("id")
+        .unique()
+        .primary();
       t.integer("person_id").references("people");
       t.string("email").references("email_addresses");
     }),
 
     knex.schema.createTable("people_phones", t => {
+      t.increments("id")
+        .unique()
+        .primary();
       t.integer("person_id").references("people");
       t.string("number").references("phone_numbers");
     }),
@@ -98,9 +104,7 @@ exports.down = function(knex, Promise) {
     knex.schema.dropTable("people_phones"),
     knex.schema.dropTable("people_addresses"),
     knex.schema.dropTable("nominations"),
-    knex.schema.dropTable("cosigns"),
-    knex.schema.dropTable("module_1_submissions"),
-    knex.schema.dropTable("module_2_submissions"),
-    knex.schema.dropTable("module_3_submissions")
+    knex.schema.dropTable("cosigners"),
+    knex.schema.dropTable("module_submissions")
   ]);
 };
