@@ -31,7 +31,7 @@ module.exports = {
       database: "nominations",
       user: config.SQL_USER,
       password: config.SQL_PASSWORD,
-      socketPath: `/cloudsql/${config.INSTANCE_CONNECTION_NAME}`
+      host: `/cloudsql/${config.SQL_INSTANCE_CONNECTION_NAME}`
     },
     pool: {
       min: 2,
