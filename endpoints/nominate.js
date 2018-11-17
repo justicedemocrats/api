@@ -20,10 +20,12 @@ async function candidate(req, res) {
 }
 
 async function writeDummyNomination(data, type) {
-  const insertResults = await db("nominations").insert({
-    type,
-    data: JSON.stringify(data)
-  });
+  const insertResults = await db("nominations")
+    .insert({
+      type,
+      data: JSON.stringify(data)
+    })
+    .returning("id");
   console.log(insertResults);
   return insertResults[0];
 }
