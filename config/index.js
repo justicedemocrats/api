@@ -1,7 +1,7 @@
 if (process.env.USE_ENV) {
   const result = process.env;
   result.templates = require("./templates");
-  return result;
+  module.exports = result;
 } else if (process.env.NODE_ENV == "production") {
   module.exports = require("./production.js");
 } else if (process.env.NODE_ENV == "ngrok") {
