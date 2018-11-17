@@ -27,7 +27,7 @@ if (module === require.main) {
   const jobs = require("./jobs");
   jobs.setup();
 
-  kueUiExpress(app, "/kue/", "/kue-api");
+  kueUiExpress(app, "/" + config.KUE_PASSWORD + "/", "/kue-api");
   app.use("/kue-api/", kue.app);
 
   const server = app.listen(process.env.PORT || 8080, () => {
