@@ -19,8 +19,7 @@ const candidateKeys = {
 
 module.exports = async function({ id }) {
   const queryResults = await db("nominations").where({ id });
-  console.log(queryResults[0]);
-  const data = JSON.parse(queryResults[0].data);
+  const data = queryResults[0].data;
 
   const core = {};
   const extra = {};
