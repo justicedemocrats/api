@@ -32,7 +32,8 @@ module.exports = {
       user: config.SQL_USER,
       password: config.SQL_PASSWORD,
       host: config.SQL_HOST,
-      port: config.SQL_PORT
+      port: config.SQL_PORT,
+      ssl: true
     },
     pool: {
       min: 2,
