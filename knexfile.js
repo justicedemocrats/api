@@ -28,7 +28,7 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: {
-      database: "nominations",
+      database: config.SQL_DATABASE,
       user: config.SQL_USER,
       password: config.SQL_PASSWORD,
       host: config.SQL_HOST,
