@@ -40,13 +40,15 @@ module.exports = async function({ nominationId, nomination, cosigners }) {
 
   const db_promise = Promise.all(
     (cosigners || []).map((c, idx) =>
-      db("cosigners").insert({
-        nomination: nominationId,
-        email: c.email,
-        name: c.name,
-        zip: c.zip,
-        airtable_id: airtable_ids[idx]
-      })
+      db("cosigners")
+        .insert({
+          nomination: nominationId,
+          email: c.email,
+          name: c.name,
+          zip: c.zip,
+          airtable_id: airtable_ids[idx]
+        })
+        .returning("id")
     )
   );
 

@@ -13,12 +13,14 @@ async function main(req, res) {
 async function writeDummySubmission(moduleReference, data) {
   const { id, module, ...submission } = data;
   const nomination = crypt.decrypt(id);
-  const insertResults = await db("module_submissions").insert({
-    nomination: nomination,
-    module_reference: moduleReference,
-    module_title: data.module,
-    data: JSON.stringify(submission)
-  });
+  const insertResults = await db("module_submissions")
+    .insert({
+      nomination: nomination,
+      module_reference: moduleReference,
+      module_title: data.module,
+      data: JSON.stringify(submission)
+    })
+    .returning("id");
   return insertResults[0];
 }
 
