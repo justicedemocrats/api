@@ -4,7 +4,6 @@ const addNominationFollowUpAttributes = require("../lib/add-nomination-follow-up
 
 module.exports = async job => {
   const { to, ...rest } = job;
-  const template = "on-submit-module->nominator";
 
   const data = {};
   Object.keys(rest).forEach(key => {
@@ -12,8 +11,12 @@ module.exports = async job => {
   });
 
   const enhanced = await addNominationFollowUpAttributes(
-    Object.assign(data, { id: data.nominationId })
+    Object.assign(data, { id: job.nomination_id })
   );
 
-  return await mail.sendTemplate(template, to, data);
+  const template = enhanced.done
+    ? "on-all-modules-done->submitter"
+    : "on-submit-module->nominator";
+
+  return await mail.sendTemplate(template, to, enhanced);
 };

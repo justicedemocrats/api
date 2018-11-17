@@ -6,7 +6,7 @@ const queue = require("../lib/queue");
 const crypt = require("../lib/crypt");
 
 module.exports = async function({ nominationId, nomination, cosigners }) {
-  if (cosigners.length == 0) {
+  if (cosigners && cosigners.length == 0) {
     return "Skipping";
   }
 
@@ -15,7 +15,7 @@ module.exports = async function({ nominationId, nomination, cosigners }) {
     .select("airtable_id"))[0].airtable_id;
 
   const airtable_ids = await Promise.all(
-    cosigners.map(
+    (cosigners || []).map(
       c =>
         new Promise((resolve, reject) => {
           airtable("Co-Signers").create(
@@ -39,7 +39,7 @@ module.exports = async function({ nominationId, nomination, cosigners }) {
   );
 
   const db_promise = Promise.all(
-    cosigners.map((c, idx) =>
+    (cosigners || []).map((c, idx) =>
       db("cosigners").insert({
         nomination: nominationId,
         email: c.email,
@@ -54,11 +54,11 @@ module.exports = async function({ nominationId, nomination, cosigners }) {
   const cosigner_ids = _.flatMap(cosigner_inserts, i => i);
 
   await Promise.all(
-    cosigners.map((cosigner, idx) =>
+    (cosigners || []).map((cosigner, idx) =>
       (async () => {
         await queue.enqueue("mail-cosigner", {
           to: cosigner.email,
-          confirm_url: `${config.COSIGN_CONFIRM_URL}#${crypt.encrypt(
+          confirm_url: `${config.COSIGN_CONFIRM_URL}/${crypt.encrypt(
             cosigner_ids[idx]
           )}`,
           ...nomination
