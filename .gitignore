@@ -66,4 +66,3 @@ config/dev.js
 config/ngrok.js
 config/production.js
 dump.rdb
-config/templates.js
