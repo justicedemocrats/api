@@ -24,6 +24,7 @@ async function writeDummyNomination(data, type) {
     type,
     data: JSON.stringify(data)
   });
+  console.log(insertResults);
   return insertResults[0];
 }
 
