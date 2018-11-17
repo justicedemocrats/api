@@ -21,8 +21,8 @@ module.exports = async ({ id }) => {
     );
 
   const submission = queryResult[0];
-  submission.submission_data = JSON.parse(submission.submission_data);
-  submission.nomination_data = JSON.parse(submission.nomination_data);
+  submission.submission_data = submission.submission_data;
+  submission.nomination_data = submission.nomination_data;
 
   await insertModuleSubmission(submission);
 
