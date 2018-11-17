@@ -1,4 +1,4 @@
-// Update with your config settings.
+const config = require("./config");
 
 const dev = {
   client: "sqlite3",
@@ -29,8 +29,9 @@ module.exports = {
     client: "postgresql",
     connection: {
       database: "nominations",
-      user: "username",
-      password: "password"
+      user: config.SQL_USER,
+      password: config.SQL_PASSWORD,
+      socketPath: `/cloudsql/${config.INSTANCE_CONNECTION_NAME}`
     },
     pool: {
       min: 2,
