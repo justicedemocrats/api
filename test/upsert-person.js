@@ -9,44 +9,54 @@ const postpendTest = email => {
   return [partOne + "+test", partTwo].join("@");
 };
 
-describe("upsert person should create and align airtable w/ db", () => {
-  const email = postpendTest(faker.internet.email());
-  const email2 = postpendTest(faker.internet.email());
-  const number = faker.phone.phoneNumberFormat();
-  const number2 = faker.phone.phoneNumberFormat();
-  const name = faker.name.findName();
+// describe("upsert person should create and align airtable w/ db", () => {
+//   const email = postpendTest(faker.internet.email());
+//   const email2 = postpendTest(faker.internet.email());
+//   const number = faker.phone.phoneNumberFormat();
+//   const number2 = faker.phone.phoneNumberFormat();
+//   const name = faker.name.findName();
 
-  it("should return a dbId and airtableId", done => {
-    upsertPerson({ email, number, name })
-      .then(result => {
-        expect(result.airtable_id).to.be.a("string");
-        insertedAirtableId = result.airtable_id;
-        done();
-      })
-      .catch(error => {
-        console.error(error);
-        console.trace();
-        done(error);
-      });
-  });
+//   it("should return a dbId and airtableId", done => {
+//     upsertPerson({ email, number, name })
+//       .then(result => {
+//         expect(result.airtable_id).to.be.a("string");
+//         insertedAirtableId = result.airtable_id;
+//         done();
+//       })
+//       .catch(error => {
+//         console.error(error);
+//         console.trace();
+//         done(error);
+//       });
+//   });
 
-  it("shouldnt create a new airtable record for the same email", done => {
-    upsertPerson({ email, number: number2, name }).then(result => {
-      expect(result.airtable_id).to.equal(insertedAirtableId);
-      done();
-    });
-  });
+//   it("shouldnt create a new airtable record for the same email", done => {
+//     upsertPerson({ email, number: number2, name }).then(result => {
+//       expect(result.airtable_id).to.equal(insertedAirtableId);
+//       done();
+//     });
+//   });
 
-  it("shouldnt create a new airtable record for the same phone", done => {
-    upsertPerson({ email: email2, number, name }).then(result => {
-      expect(result.airtable_id).to.equal(insertedAirtableId);
-      done();
-    });
-  });
+//   it("shouldnt create a new airtable record for the same phone", done => {
+//     upsertPerson({ email: email2, number, name }).then(result => {
+//       expect(result.airtable_id).to.equal(insertedAirtableId);
+//       done();
+//     });
+//   });
 
-  it("shouldnt create a new airtable record for all matches", done => {
-    upsertPerson({ email, number, name }).then(result => {
-      expect(result.airtable_id).to.equal(insertedAirtableId);
+//   it("shouldnt create a new airtable record for all matches", done => {
+//     upsertPerson({ email, number, name }).then(result => {
+//       expect(result.airtable_id).to.equal(insertedAirtableId);
+//       done();
+//     });
+//   });
+// });
+
+describe("name only should work too", () => {
+  it("should return an airtable id", done => {
+    const name = faker.name.findName();
+    upsertPerson({ name }).then(result => {
+      expect(result.airtable_id).to.be.a("string");
       done();
     });
   });
