@@ -2,6 +2,7 @@ const queue = require("../lib/queue");
 const insertNomination = require("../lib/insert-nomination");
 const db = require("../lib/db");
 const crypt = require("../lib/crypt");
+const nameify = require("../lib/nameify");
 
 const candidateKeys = {
   "Nominator Email": "nominatorEmail",
@@ -38,14 +39,14 @@ module.exports = async function({ id }) {
     number: core.nominatorPhone,
     email: core.nominatorEmail,
     zip: core.nominatorZip,
-    name: core.nominatorFirst + " " + core.nominatorLast
+    name: nameify(core.nominatorFirst, core.nominatorLast)
   };
 
   const nominee = {
     number: core.nomineePhone,
     email: core.nomineeEmail,
     zip: core.nomineeZip,
-    name: core.nomineeFirst + " " + core.nomineeLast
+    name: nameify(core.nomineeFirst, core.nomineeLast)
   };
 
   const nomination = extra;
