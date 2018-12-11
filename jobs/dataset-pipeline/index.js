@@ -8,9 +8,13 @@ const breakdowns = {};
 async function getProperties(filename) {
   const file = filename.split(".")[0];
   let type;
+  let state;
+  let district;
+  let state_district;
 
   if (file.split("-").length == 1) {
     type = "state";
+    state = file;
     if (!breakdowns.state) {
       breakdowns.state = await getBreakdown("state");
       type = "state";
@@ -19,6 +23,9 @@ async function getProperties(filename) {
 
   if (file.split("-").length == 2) {
     type = "district";
+    state = file.split("-")[0];
+    district = file.split("-")[1];
+    state_district = file;
     if (!breakdowns.district) {
       breakdowns.district = await getBreakdown("district");
     }
@@ -26,9 +33,12 @@ async function getProperties(filename) {
 
   const result = {
     name: filename.split(".")[0],
+    state: state,
     nominations: breakdowns[type].nominations[file] || 0,
     candidates: breakdowns[type].candidates[file] || 0
   };
+
+  if (district) Object.assign(result, { district, state_district });
 
   return result;
 }
