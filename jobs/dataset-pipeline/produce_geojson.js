@@ -66,11 +66,13 @@ function produceGeoJson(type, getProperties) {
 
       const featureCollection = {
         type: "FeatureCollection",
-        features: geoJsonObjects.map(([filename, obj]) => ({
-          type: "Feature",
-          geometry: obj.geometry ? obj.geometry : obj,
-          properties: getProperties(filename)
-        }))
+        features: await Promise.all(
+          geoJsonObjects.map(async ([filename, obj]) => ({
+            type: "Feature",
+            geometry: obj.geometry ? obj.geometry : obj,
+            properties: await getProperties(filename)
+          }))
+        )
       };
 
       resolve(featureCollection);

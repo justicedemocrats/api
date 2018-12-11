@@ -46,6 +46,7 @@ async function updateFeature(dataset, feature) {
     )
     .send(feature);
 
+  console.log(`Did ${feature.properties.name}`);
   return resp.body;
 }
 

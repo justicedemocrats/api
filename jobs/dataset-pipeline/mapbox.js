@@ -1,4 +1,5 @@
 const request = require("superagent");
+const config = require("../../config");
 const credentials = { access_token: config.MAPBOX_ACCESS_TOKEN };
 const username = config.MAPBOX_USERNAME;
 const baseUrl = "https://api.mapbox.com";
