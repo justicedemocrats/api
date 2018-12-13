@@ -1,10 +1,23 @@
+const _ = require("lodash");
+const config = require("../../config");
+const Airtable = require("airtable");
+const airtable = new Airtable({
+  apiKey: config.AIRTABLE_API_KEY
+}).base(config.AIRTABLE_CONGRESSIONAL_BASE);
+console.log(config.AIRTABLE_CONGRESSIONAL_BASE);
 const produceGeoJson = require("./produce_geojson");
 const { updateDataset, ensureDatasets } = require("./update_dataset");
 const convertToTileset = require("./convert-to-tileset");
-const _ = require("lodash");
 const db = require("../../lib/db");
 
 const breakdowns = {};
+async function initializeProperties() {
+  breakdowns.state = await getBreakdown("state");
+  breakdowns.district = await getBreakdown("district");
+  breakdowns.tags = await getTags();
+  console.log(breakdowns.tags);
+}
+
 async function getProperties(filename) {
   const file = filename.split(".")[0];
   let type;
@@ -15,10 +28,6 @@ async function getProperties(filename) {
   if (file.split("-").length == 1) {
     type = "state";
     state = file;
-    if (!breakdowns.state) {
-      breakdowns.state = await getBreakdown("state");
-      type = "state";
-    }
   }
 
   if (file.split("-").length == 2) {
@@ -26,9 +35,6 @@ async function getProperties(filename) {
     state = file.split("-")[0];
     district = file.split("-")[1];
     state_district = file;
-    if (!breakdowns.district) {
-      breakdowns.district = await getBreakdown("district");
-    }
   }
 
   const result = {
@@ -38,7 +44,12 @@ async function getProperties(filename) {
     candidates: breakdowns[type].candidates[file] || 0
   };
 
-  if (district) Object.assign(result, { district, state_district });
+  if (district)
+    Object.assign(
+      result,
+      { district, state_district },
+      breakdowns.tags[state_district]
+    );
 
   return result;
 }
@@ -80,12 +91,43 @@ function toMap(data) {
   );
 }
 
+function getTags() {
+  console.log(98);
+  const districts = {};
+  return new Promise((resolve, reject) => {
+    airtable("House")
+      .select({ view: "Grid view" })
+      .eachPage(
+        function onPage(records, next) {
+          records.forEach(r => {
+            districts[r.fields["ID"]] = {
+              member_name: r.fields["Name"],
+              member_party: r.fields["Party"],
+              member_is_jd:
+                r.fields["Tags"] &&
+                r.fields["Tags"].includes("Justice Democrat"),
+              member_supports_gnd:
+                r.fields["Tags"] &&
+                r.fields["Tags"].includes("'GND Committee Supporter'")
+            };
+          });
+
+          next();
+        },
+        function onDone(err) {
+          return resolve(districts);
+        }
+      );
+  });
+}
+
 async function main() {
   const datasets = await ensureDatasets();
   const types = Object.keys(datasets);
 
   for (let type of types) {
     console.log("Computing feature collection for type %s", type);
+    await initializeProperties();
     const featureCollection = await produceGeoJson(type, getProperties);
     console.log("Got feature colleciton for type %s", type);
     await updateDataset(datasets[type], featureCollection.features);
