@@ -1,21 +1,15 @@
 const _ = require("lodash");
-const config = require("../../config");
-const Airtable = require("airtable");
-const airtable = new Airtable({
-  apiKey: config.AIRTABLE_API_KEY
-}).base(config.AIRTABLE_CONGRESSIONAL_BASE);
-console.log(config.AIRTABLE_CONGRESSIONAL_BASE);
 const produceGeoJson = require("./produce_geojson");
 const { updateDataset, ensureDatasets } = require("./update_dataset");
 const convertToTileset = require("./convert-to-tileset");
+const getMemberInfo = require("./get-member-info");
 const db = require("../../lib/db");
 
 const breakdowns = {};
 async function initializeProperties() {
   breakdowns.state = await getBreakdown("state");
   breakdowns.district = await getBreakdown("district");
-  breakdowns.tags = await getTags();
-  console.log(breakdowns.tags);
+  breakdowns.tags = await getMemberInfo();
 }
 
 async function getProperties(filename) {
@@ -89,36 +83,6 @@ function toMap(data) {
       )
       .map(([key, val]) => [key, parseInt(val)])
   );
-}
-
-function getTags() {
-  console.log(98);
-  const districts = {};
-  return new Promise((resolve, reject) => {
-    airtable("House")
-      .select({ view: "Grid view" })
-      .eachPage(
-        function onPage(records, next) {
-          records.forEach(r => {
-            districts[r.fields["ID"]] = {
-              member_name: r.fields["Name"],
-              member_party: r.fields["Party"],
-              member_is_jd:
-                r.fields["Tags"] &&
-                r.fields["Tags"].includes("Justice Democrat"),
-              member_supports_gnd:
-                r.fields["Tags"] &&
-                r.fields["Tags"].includes("'GND Committee Supporter'")
-            };
-          });
-
-          next();
-        },
-        function onDone(err) {
-          return resolve(districts);
-        }
-      );
-  });
 }
 
 async function main() {
