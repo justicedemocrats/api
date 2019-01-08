@@ -28,7 +28,9 @@ function setUpQueue() {
     });
 }
 
-const cronMap = [["*/10 * * * *", require("./dataset-pipeline")]];
+const cronMap = [
+  // ["*/10 * * * *", require("./dataset-pipeline")]
+];
 function setUpCron() {
   cronMap.forEach(([interval, fn]) => {
     cron.schedule(interval, fn);
