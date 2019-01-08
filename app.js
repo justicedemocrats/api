@@ -9,6 +9,7 @@ const signup = require("./endpoints/signup");
 const nominate = require("./endpoints/nominate");
 const moduleHandler = require("./endpoints/module");
 const cosigner = require("./endpoints/cosigner");
+const districtBreakdown = require("./endpoints/district-breakdown");
 const { kue } = require("./lib/queue");
 const config = require("./config");
 
@@ -22,6 +23,7 @@ app.post("/nominate/district", nominate.district);
 app.post("/nominate/candidate", nominate.candidate);
 app.post("/module/:module", moduleHandler);
 app.get("/cosigner/confirm/:id", cosigner.confirm);
+app.get("/district-breakdown", districtBreakdown);
 
 if (module === require.main) {
   const jobs = require("./jobs");
