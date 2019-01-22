@@ -12,12 +12,11 @@ async function main(req, res) {
 
   const breakdownMap = {};
   for (let row of breakdown) {
-    console.log(row);
     breakdownMap[`${row.state}-${row.district}`] = row.count;
   }
 
   return res.json(
-    hidePreviousCycle ? breakdownMap : mapSum(breakdown, previousCycle)
+    hidePreviousCycle ? breakdownMap : mapSum(breakdownMap, previousCycle)
   );
 }
 
