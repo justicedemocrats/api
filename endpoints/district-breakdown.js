@@ -10,8 +10,13 @@ async function main(req, res) {
     .count("*")
     .groupBy("state", "district");
 
+  const breakdownMap = {};
+  for (let row of breakdown) {
+    breakdownMap[`${row.state}-${row.district}`] = row.count;
+  }
+
   return res.json(
-    hidePreviousCycle ? breakdown : mapSum(breakdown, previousCycle)
+    hidePreviousCycle ? breakdownMap : mapSum(breakdown, previousCycle)
   );
 }
 
