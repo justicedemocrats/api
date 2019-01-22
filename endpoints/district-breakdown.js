@@ -12,6 +12,7 @@ async function main(req, res) {
 
   const breakdownMap = {};
   for (let row of breakdown) {
+    console.log(row);
     breakdownMap[`${row.state}-${row.district}`] = row.count;
   }
 
